@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Models\ShopOwner;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -15,9 +16,13 @@ class CustomerController extends Controller
     {
         $shopOwnerId = $request->header('shopOwnerId');
 
-        $customers = Customer::where('shop_id',$shopOwnerId)->get();
+        $data['customers'] = Customer::where('shop_id',$shopOwnerId)->get();
+        $data['title'] = 'Customer List';
+
+        $data['shopOwnerName'] = ShopOwner::where('id',$shopOwnerId)->select('firstName','lastName')->first();
+
         
-        return $customers;
+        return view('pages.customer.customer',$data);
     }
 
     /**

@@ -14,6 +14,10 @@
 
                 <!-- Bootstrap core JS-->
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+                  <!-- Core theme JS-->
+        <script src="{{asset('assets/js/scripts.js')}}"></script>
+        <script src="{{asset('assets/js/jquery.js')}}"></script>
+        <script src="{{asset('assets/js/dtables.js')}}"></script>
 
     </head>
     <body>
@@ -23,6 +27,8 @@
                 <div class="sidebar-heading border-bottom bg-light">Assignment 22</div>
                 <div class="list-group list-group-flush">
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{{url('/dashboard')}}">Dashboard</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{{url('/customer')}}">Customer</a>
+
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{{url('/shop-owner-logout')}}">Logout</a>
                 </div>
             </div>
@@ -52,9 +58,6 @@
             </div>
         </div>
 
-        <!-- Core theme JS-->
-        <script src="{{asset('assets/js/scripts.js')}}"></script>
-        <script src="{{asset('assets/js/jquery.js')}}"></script>
-        <script src="{{asset('assets/js/dtables.js')}}"></script>
+      
     </body>
 </html>
