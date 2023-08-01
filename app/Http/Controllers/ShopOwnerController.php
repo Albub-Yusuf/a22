@@ -72,11 +72,10 @@ class ShopOwnerController extends Controller
         $shopOwnerId = $request->header('shopOwnerId');
 
         $shopOwnerName = ShopOwner::where('id',$shopOwnerId)->select('firstName','lastName')->first(); 
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Welcome to dashboard- '.$shopOwnerName->firstName." ".$shopOwnerName->lastName
-        ],200);
+        $pageTitle = 'Dashboard';
+        $totalUser = ShopOwner::count();
+      
+        return view('pages.dashboard.dashboard',['title'=>$pageTitle,'shopOwnerName'=>$shopOwnerName,'totalCustomer'=>$totalUser]);
 
     }
 }
