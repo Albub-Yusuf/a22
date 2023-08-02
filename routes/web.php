@@ -35,6 +35,6 @@ Route::get('dashboard',[ShopOwnerController::class,'dashboard'])->middleware(Tok
 
 Route::resource('customer',CustomerController::class)->middleware(TokenVerificationMiddleware::class);
 
-Route::post('customer-update/{id}',[CustomerController::class,'updateCustomer'])->middleware(TokenVerificationMiddleware::class);
+Route::post('customer-update/{id}',[CustomerController::class,'updateCustomer'])->middleware(TokenVerificationMiddleware::class)->name('customerUpdate');
 
-Route::post('customer-delete/{id}',[CustomerController::class,'deleteCustomer'])->middleware(TokenVerificationMiddleware::class);
+Route::post('customer-delete/{id}',[CustomerController::class,'deleteCustomer'])->middleware(TokenVerificationMiddleware::class)->name('customerDelete');

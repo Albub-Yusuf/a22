@@ -20,6 +20,7 @@ class CustomerController extends Controller
         $data['title'] = 'Customer List';
 
         $data['shopOwnerName'] = ShopOwner::where('id',$shopOwnerId)->select('firstName','lastName')->first();
+        $data['serial'] = 1;
 
         
         return view('pages.customer.customer',$data);
@@ -28,9 +29,14 @@ class CustomerController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        return "customer create page";
+        $data['title'] = 'Add Customer';
+        $shopOwnerId = $request->header('shopOwnerId');
+        $data['customers'] = Customer::where('shop_id',$shopOwnerId)->get();
+        $data['shopOwnerName'] = ShopOwner::where('id',$shopOwnerId)->select('firstName','lastName')->first();
+
+        return view('pages.customer.create',$data);
     }
 
     /**
@@ -39,6 +45,8 @@ class CustomerController extends Controller
     public function store(Request $request)
     {
         $shopOwnerId = $request->header('shopOwnerId');
+
+        
 
         $request->validate([
             'name' => 'required',
@@ -63,12 +71,14 @@ class CustomerController extends Controller
            
         ]);
 
-        return response()->json([
+        // return response()->json([
 
-            'status' => 'success',
-            'message' => 'Customer added successfully!'
+        //     'status' => 'success',
+        //     'message' => 'Customer added successfully!'
 
-        ],200);
+        // ],200);
+
+        return redirect(route('customer.index'));
 
 
        }catch(Exception $e){
@@ -104,7 +114,11 @@ class CustomerController extends Controller
         $shopOwnerId = $request->header('shopOwnerId');
 
         if($customer->shop_id==$shopOwnerId){
-            return $customer;
+            $data['title'] = 'Customer Edit';
+            $data['shopOwnerId'] = $shopOwnerId;
+            $data['shopOwnerName'] = ShopOwner::where('id',$shopOwnerId)->select('firstName','lastName')->first();
+            $data['customerDetails'] = $customer;
+            return view('pages.customer.edit',$data);
         }else{
             return "Customer information restricted for this shop owner";
         }
@@ -129,7 +143,7 @@ class CustomerController extends Controller
             
         ]);
 
-     
+        
        
        try{
 
@@ -144,7 +158,7 @@ class CustomerController extends Controller
         ]);
 
         if($result){
-            return response()->json(['status'=>'success','message'=>'customer information updated successfully!'],200);
+            return redirect(route('customer.index'));
         }else{
             return "access denied!";
         }
@@ -173,7 +187,8 @@ class CustomerController extends Controller
            $result = Customer::where('shop_id',$shopOwnerId)->where('id',$customerId)->delete();
 
             if($result){
-                return response()->json(['status'=>'success','message'=>'customer information deleted successfully!'],200);
+               return redirect(route('customer.index'));
+                // return response()->json(['status'=>'success','message'=>'customer information deleted successfully!'],200);
             }else{
                 return "access denied!";
             }

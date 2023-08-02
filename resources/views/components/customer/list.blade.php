@@ -19,13 +19,20 @@
             <tbody id="tableList">
                 @foreach($customers as $customer)
                     <tr>
-                        <td>{{$customer->id}}</td>
+                        <td>{{$serial++}}</td>
                         <td>{{$customer->name}}</td>
                         <td>{{$customer->email}}</td>
                         <td>{{$customer->status}}</td>
                         <td>
-                            <span><a  href="{{route('customer.edit',$customer->id)}}" class="btn btn-sm btn-warning">Edit</a></span> | 
-                            <span><button class="btn btn-sm btn-danger">Delete</button></span>
+                           <div class="action-container d-flex" >
+                           <div><a  href="{{route('customer.edit',$customer->id)}}" class="btn btn-sm btn-warning">Edit</a></div>&nbsp;&nbsp; |  &nbsp;&nbsp;
+                            <div>
+                                <form action="{{route('customerDelete',$customer->id)}}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                </form>
+                            </div>
+                           </div>
                         </td>
                     </tr>
                 @endforeach
