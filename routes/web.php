@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ShopOwnerController;
@@ -38,3 +39,12 @@ Route::resource('customer',CustomerController::class)->middleware(TokenVerificat
 Route::post('customer-update/{id}',[CustomerController::class,'updateCustomer'])->middleware(TokenVerificationMiddleware::class)->name('customerUpdate');
 
 Route::post('customer-delete/{id}',[CustomerController::class,'deleteCustomer'])->middleware(TokenVerificationMiddleware::class)->name('customerDelete');
+
+
+// Campaign
+
+Route::resource('campaign',CampaignController::class)->middleware(TokenVerificationMiddleware::class);
+
+Route::post('campaign-update/{id}',[CampaignController::class,'updateCampaign'])->middleware(TokenVerificationMiddleware::class)->name('campaignUpdate');
+
+Route::post('campaign-delete/{id}',[CampaignController::class,'deleteCampaign'])->middleware(TokenVerificationMiddleware::class)->name('campaignDelete');

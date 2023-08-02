@@ -27,7 +27,9 @@
                 <div class="sidebar-heading border-bottom bg-light">Assignment 22</div>
                 <div class="list-group list-group-flush">
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{{url('/dashboard')}}">Dashboard</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{{url('/customer')}}">Customer</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{{url('/customer')}}">Customers</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{{url('/campaign')}}">Campaigns</a>
+
 
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{{url('/shop-owner-logout')}}">Logout</a>
                 </div>
