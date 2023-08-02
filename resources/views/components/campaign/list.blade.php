@@ -12,7 +12,6 @@
             <thead>
                 <th>Serial</th>
                 <th>Title</th>
-                <th>URL</th>
                 <th>Action</th>
             </thead>
             <tbody id="tableList">
@@ -20,16 +19,17 @@
                     <tr>
                         <td>{{$serial++}}</td>
                         <td>{{$campaign->title}}</td>
-                        <td>{{$campaign->url}}</td>
                         <td>
                            <div class="action-container d-flex" >
-                           <div><a  href="{{route('campaign.edit',$campaign->id)}}" class="btn btn-sm btn-warning">Edit</a></div>&nbsp;&nbsp; |  &nbsp;&nbsp;
+                           <div><a  href="{{route('campaign.edit',$campaign->id)}}" class="btn btn-sm btn-warning"><strong>Edit</strong></a></div>&nbsp;&nbsp; |  &nbsp;&nbsp;
                             <div>
                                 <form action="{{route('campaignDelete',$campaign->id)}}" method="POST">
                                     @csrf
-                                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                    <button type="submit" class="btn btn-sm btn-danger"><strong>Delete</strong></button>
                                 </form>
-                            </div>
+                            </div>&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                            <div><a  href="{{route('campaignMailData',$campaign->id)}}" class="btn btn-sm btn-success"><strong>Send Promotional Email</strong></a></div>&nbsp;&nbsp; &nbsp;&nbsp;
+
                            </div>
                         </td>
                     </tr>

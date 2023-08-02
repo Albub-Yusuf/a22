@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\ShopOwner;
 use App\Helper\JWTToken;
+use App\Models\Campaign;
+use App\Models\Customer;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -71,11 +73,12 @@ class ShopOwnerController extends Controller
     function dashboard(Request $request){
         $shopOwnerId = $request->header('shopOwnerId');
 
-        $shopOwnerName = ShopOwner::where('id',$shopOwnerId)->select('firstName','lastName')->first(); 
-        $pageTitle = 'Dashboard';
-        $totalUser = ShopOwner::count();
+        $data['shopOwnerName'] = ShopOwner::where('id',$shopOwnerId)->select('firstName','lastName')->first(); 
+        $data['title'] = 'Dashboard';
+        $data['totalCustomer'] = Customer::where('shop_id',$shopOwnerId)->count();
+        $data['totalCampaign'] = Campaign::where('shop_id',$shopOwnerId)->count();
       
-        return view('pages.dashboard.dashboard',['title'=>$pageTitle,'shopOwnerName'=>$shopOwnerName,'totalCustomer'=>$totalUser]);
+        return view('pages.dashboard.dashboard',$data);
 
     }
 }

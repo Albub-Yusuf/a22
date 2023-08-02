@@ -16,7 +16,7 @@
                         <div class="card shadow-lg">
 						    <div   div class="card-body p-5">
 							    <h1 class="fs-4 card-title fw-bold mb-4">Total Campaign</h1>
-                                <h3>10</h3>
+                                <h3>{{$totalCampaign}}</h3>
                             </div>
                         </div>
                     </div>

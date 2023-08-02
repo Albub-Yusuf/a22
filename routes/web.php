@@ -48,3 +48,7 @@ Route::resource('campaign',CampaignController::class)->middleware(TokenVerificat
 Route::post('campaign-update/{id}',[CampaignController::class,'updateCampaign'])->middleware(TokenVerificationMiddleware::class)->name('campaignUpdate');
 
 Route::post('campaign-delete/{id}',[CampaignController::class,'deleteCampaign'])->middleware(TokenVerificationMiddleware::class)->name('campaignDelete');
+
+Route::get('campaign-data-send-email/{id}',[CampaignController::class,'getEmailFormData'])->middleware(TokenVerificationMiddleware::class)->name('campaignMailData');
+
+Route::post('send-promotional-email-campaign',[CampaignController::class,'sendEmail'])->middleware(TokenVerificationMiddleware::class,)->name('send-campaign-email');

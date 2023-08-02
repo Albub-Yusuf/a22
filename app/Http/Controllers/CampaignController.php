@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\PromotionalEmail;
 use App\Models\Campaign;
 use App\Models\Customer;
 use App\Models\ShopOwner;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class CampaignController extends Controller
 {
@@ -167,6 +169,63 @@ class CampaignController extends Controller
         }catch(Exception $e){
             return response()->json(['status'=>'failed','message'=>'something went wrong!']);
         }
+    }
+
+
+    function getEmailFormData(Request $request,$campaignId){
+
+        
+        $data['title'] = 'Email Sending From';
+        $shopOwnerId = $request->header('shopOwnerId');
+        $data['campaignDetails'] = Campaign::where('shop_id',$shopOwnerId)->where('id',$campaignId)->first();
+        $data['shopOwnerName'] = ShopOwner::where('id',$shopOwnerId)->select('firstName','lastName')->first();
+        return view('pages.campaign.campaignMailForm',$data);
+    }
+
+    function sendEmail(Request $request){
+        $shopOwnerId = $request->header('shopOwnerId');
+        $status = $request->status;
+       // dd($status);
+       $campaign = Campaign::where('shop_id',$shopOwnerId)->where('id',$request->campaignId)->first();
+
+
+        if($status==="subscribed"){
+            $customers = Customer::where('shop_id',$shopOwnerId)->where('status',"subscribed")->get();
+            
+            foreach ($customers as $key => $customer) {
+                Mail::to($customer->email)->send(new PromotionalEmail($campaign));
+            }
+
+            return view('email.emailSuccess');
+        }
+
+        if($status==="unsubscribed"){
+            $customers = Customer::where('shop_id',$shopOwnerId)->where('status',"unsubscribed")->get();
+            foreach ($customers as $key => $customer) {
+                Mail::to($customer->email)->send(new PromotionalEmail($campaign));
+            }
+
+          return view('email.emailSuccess');
+        }
+
+        if($status==="new"){
+            $customers = Customer::where('shop_id',$shopOwnerId)->where('status',"new")->get();
+            foreach ($customers as $key => $customer) {
+                Mail::to($customer->email)->send(new PromotionalEmail($campaign));
+            }
+
+            return view('email.emailSuccess');
+        }
+
+        if($status==="all"){
+            $customers = Customer::where('shop_id',$shopOwnerId)->get();
+            foreach ($customers as $key => $customer) {
+                Mail::to($customer->email)->send(new PromotionalEmail($campaign));
+            }
+
+            return view('email.emailSuccess');
+        }
+
     }
 
 
